@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bardia Naraghi Farshad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Roboto:wght@400;500;700&family=STIX+Two+Text:ital@1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Plan: drafting-paper sheet, ink text, one arc-orange accent; blue-steel for data.
+   Layout: a weld profile drawn across the hero; every project opens with a WPS-style spec strip. */
+:root{
+  --paper:#f2f3f0; --sheet:#fbfbf9; --ink:#161a1f; --muted:#5a636c; --rule:#d5d8d2;
+  --arc:#d9531a; --steel:#2e5168; --arc-soft:#f6e2d6;
+  --display:"Archivo","Arial Narrow",Arial,sans-serif;
+  --body:"Roboto","Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#111417; --sheet:#171b1f; --ink:#e8eae6; --muted:#9aa3ab; --rule:#2b3137;
+    --arc:#ff7b3f; --steel:#8db6cf; --arc-soft:#3a2418; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#111417; --sheet:#171b1f; --ink:#e8eae6; --muted:#9aa3ab; --rule:#2b3137;
+  --arc:#ff7b3f; --steel:#8db6cf; --arc-soft:#3a2418; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body);
+  background-image:linear-gradient(var(--rule) 1px,transparent 1px),linear-gradient(90deg,var(--rule) 1px,transparent 1px);
+  background-size:48px 48px;background-attachment:fixed}
+body::before{content:"";position:fixed;inset:0;background:var(--paper);opacity:.86;z-index:-1}
+a{color:inherit}
+img{max-width:100%;display:block}
+:focus-visible{outline:2px solid var(--arc);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--display);font-stretch:72%;line-height:1.02;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:clamp(44px,7.2vw,92px);font-weight:780;text-transform:uppercase}
+h2{font-size:clamp(32px,4.6vw,54px);font-weight:760;text-transform:uppercase}
+h3{font-size:24px;font-weight:700;font-stretch:80%}
+p{margin:0;max-width:66ch}
+p,li,.job ul li,.steps p,.card p,.pub p{text-align:justify;text-justify:inter-word;hyphens:auto;-webkit-hyphens:auto}
+.figcap,figcaption,.label,.pill,.stats span,.result span{text-align:left;hyphens:manual}
+.lead{font-size:19px;color:var(--ink)}
+.muted{color:var(--muted)}
+.mono,.label{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
+.label{text-transform:uppercase;color:var(--muted)}
+
+/* header */
+header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 24px;max-width:1120px;margin:0 auto}
+.brand{font-family:var(--display);font-stretch:75%;font-weight:760;font-size:20px;text-transform:uppercase;text-decoration:none;letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+.brand i{width:10px;height:10px;background:var(--arc);border-radius:50%;box-shadow:0 0 0 4px var(--arc-soft)}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav a{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.05em;text-decoration:none;padding:7px 10px;border-radius:4px;color:var(--muted)}
+nav a:hover{color:var(--ink);background:var(--sheet)}
+nav a[aria-current="page"]{color:var(--ink);background:var(--sheet);box-shadow:inset 0 -2px 0 var(--arc)}
+
+/* pages */
+.page{display:none;padding:56px 0 96px}
+.page.on{display:block}
+.stack{display:flex;flex-direction:column;gap:22px}
+.page>section,.page>.hero+section{margin-top:64px}
+.page>section:first-child{margin-top:0}
+
+/* hero */
+.hero{display:grid;gap:28px}
+.hero-top{display:grid;grid-template-columns:1fr 280px;gap:36px;align-items:end}
+.hero-top .intro{display:flex;flex-direction:column;gap:24px}
+.portrait{margin:0;border:1px solid var(--rule);border-radius:6px;overflow:hidden;background:var(--sheet)}
+.portrait img{aspect-ratio:4/5;object-fit:cover;width:100%}
+.portrait figcaption{font-family:var(--mono);font-size:11.5px;color:var(--muted);padding:8px 10px;border-top:1px solid var(--rule)}
+@media (max-width:820px){.hero-top{grid-template-columns:1fr}.portrait{max-width:260px}}
+.gallery video{width:100%;display:block;background:#000;max-height:520px;object-fit:contain}
+.talk{display:grid;grid-template-columns:1.3fr 1fr;gap:28px;align-items:center}
+@media (max-width:820px){.talk{grid-template-columns:1fr}}
+.pubs{display:flex;flex-direction:column;border-top:1px solid var(--ink)}
+.pub{display:grid;grid-template-columns:150px 1fr;gap:20px;padding:18px 0;border-bottom:1px solid var(--rule)}
+.pub .st{font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--arc);padding-top:3px}
+.pub h4{margin:0 0 4px;font-size:17px;font-weight:600;line-height:1.35;max-width:70ch}
+.pub p{font-size:14.5px;color:var(--muted)}
+.pub b{color:var(--ink);font-weight:600}
+@media (max-width:640px){.pub{grid-template-columns:1fr;gap:4px}}
+.talk figure{margin:0;border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+.hero .kicker{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+@media (min-width:900px){.hero .kicker{flex-wrap:nowrap}}
+.pill{font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;border:1px solid var(--rule);background:var(--sheet);padding:5px 9px;border-radius:999px;color:var(--muted)}
+.pill.glow{border-color:var(--arc);color:var(--arc);background:var(--sheet);box-shadow:none;}
+.pill.glow.lit{background:var(--arc-soft);box-shadow:0 0 18px color-mix(in srgb,var(--arc) 75%,transparent),0 0 4px var(--arc);}
+@keyframes glow{0%,45%{box-shadow:0 0 18px color-mix(in srgb,var(--arc) 75%,transparent),0 0 4px var(--arc);background:var(--arc-soft)}50%,95%{box-shadow:none;background:var(--sheet)}100%{box-shadow:0 0 18px color-mix(in srgb,var(--arc) 75%,transparent),0 0 4px var(--arc);background:var(--arc-soft)}}
+.pill.hot{border-color:var(--arc);color:var(--arc)}
+.profile-fig{background:var(--sheet);border:1px solid var(--rule);border-radius:6px;padding:12px 12px 6px;overflow:hidden}
+.profile-fig svg{width:100%;height:auto;display:block}
+.profile-fig .ln{fill:none;stroke:var(--ink);stroke-width:2.4}
+.profile-fig .draw{stroke-dasharray:1400;stroke-dashoffset:0;animation:draw 2.2s ease-out both}
+@keyframes draw{from{stroke-dashoffset:1400}to{stroke-dashoffset:0}}
+.profile-fig .base{fill:none;stroke:var(--muted);stroke-width:1;stroke-dasharray:4 5}
+.profile-fig .acc{fill:none;stroke:var(--arc);stroke-width:1.6}
+.profile-fig .st{fill:none;stroke:var(--steel);stroke-width:1.4}
+.profile-fig text{font-family:var(--mono);font-size:12px;fill:var(--muted)}
+.profile-fig text.a{fill:var(--arc)} .profile-fig text.s{fill:var(--steel)}
+.profile-fig .dot{fill:var(--arc)}
+.profile-fig .sheet{fill:var(--rule);opacity:.7}
+.profile-fig .weld{fill:var(--steel);opacity:.13}
+.profile-fig .dim{fill:none;stroke:var(--muted);stroke-width:1}
+.profile-fig text.m{font-family:"STIX Two Text","Times New Roman",serif;font-style:italic;font-size:24px;fill:var(--ink)}
+.profile-fig text.m.a{fill:var(--arc)} .profile-fig text.m.s{fill:var(--steel)}
+.profile-fig tspan.sb{font-size:15px}
+.figcap{font-family:var(--body);font-size:14px;line-height:1.55;color:var(--muted);padding:8px 2px 4px}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--rule);border-radius:6px;background:var(--sheet)}
+.stats div{padding:18px 18px 16px;border-left:1px solid var(--rule)}
+.stats div:first-child{border-left:0}
+.stats b{display:block;font-family:var(--display);font-stretch:70%;font-size:40px;font-weight:760;line-height:1;font-variant-numeric:tabular-nums}
+.stats span{font-size:13.5px;color:var(--muted)}
+@media (max-width:760px){.stats{grid-template-columns:1fr 1fr}.stats div:nth-child(3){border-left:0}.stats div:nth-child(n+3){border-top:1px solid var(--rule)}}
+
+/* work index */
+.worklist{display:flex;flex-direction:column;border-top:1px solid var(--ink)}
+.work{display:grid;grid-template-columns:56px 1.2fr 1fr 180px;gap:20px;align-items:center;padding:20px 4px;border-bottom:1px solid var(--rule);text-decoration:none}
+.work:hover{background:var(--sheet)}
+.work:hover h3{color:var(--arc)}
+.work .no{font-family:var(--mono);color:var(--muted);font-size:13px}
+.work p{font-size:15px;color:var(--muted)}
+.work .thumb{aspect-ratio:3/2;border-radius:4px;overflow:hidden;border:1px solid var(--rule);background:var(--sheet)}
+.work .thumb img{width:100%;height:100%;object-fit:cover}
+@media (max-width:760px){.work{grid-template-columns:40px 1fr}.work .thumb{display:none}.work p{grid-column:2}}
+
+/* case pages */
+.back{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.05em;text-decoration:none;color:var(--muted)}
+.back:hover{color:var(--arc)}
+.spec{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));border:1px solid var(--ink);border-radius:4px;background:var(--sheet)}
+.spec div{padding:12px 14px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.spec dt{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.spec dd{margin:4px 0 0;font-size:14.5px;font-weight:500}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+@media (max-width:820px){.cols{grid-template-columns:1fr;gap:24px}}
+.steps{counter-reset:s;display:flex;flex-direction:column;gap:18px;padding:0;margin:0;list-style:none}
+.steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:12px}
+.steps li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:13px;color:var(--arc);border-top:2px solid var(--arc);padding-top:6px}
+.steps h4{margin:0 0 4px;font-size:16px;font-weight:600}
+.steps p{font-size:15px;color:var(--muted)}
+.gallery{display:grid;gap:14px;grid-template-columns:repeat(12,1fr)}
+.gallery figure{margin:0;background:var(--sheet);border:1px solid var(--rule);border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
+.gallery figure button{all:unset;cursor:zoom-in;display:block;flex:1;background:#fff}
+.gallery figure img{width:100%;height:100%;object-fit:contain;max-height:420px;margin:auto}
+.gallery figcaption{font-size:13px;color:var(--muted);padding:10px 12px;border-top:1px solid var(--rule)}
+.g4{grid-column:span 4}.g5{grid-column:span 5}.g6{grid-column:span 6}.g7{grid-column:span 7}.g8{grid-column:span 8}.g12{grid-column:span 12}.g3{grid-column:span 3}
+@media (max-width:760px){.gallery>figure{grid-column:span 12}}
+.result{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.result div{background:var(--sheet);border:1px solid var(--rule);border-left:3px solid var(--arc);border-radius:4px;padding:16px}
+.result b{display:block;font-family:var(--display);font-stretch:70%;font-size:32px;line-height:1.05;font-weight:760;font-variant-numeric:tabular-nums}
+.result span{font-size:14px;color:var(--muted)}
+.note{font-size:14px;color:var(--muted);border:1px dashed var(--rule);border-radius:4px;padding:12px 14px;max-width:none}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-family:var(--mono);font-size:11.5px;padding:4px 8px;border-radius:3px;background:var(--sheet);border:1px solid var(--rule)}
+
+/* software page */
+.app-head{display:grid;grid-template-columns:1.2fr 1fr;gap:32px;align-items:end}
+@media (max-width:820px){.app-head{grid-template-columns:1fr}}
+.modules{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media (max-width:760px){.modules{grid-template-columns:1fr}}
+.mod{all:unset;cursor:pointer;background:var(--sheet);border:1px solid var(--rule);border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.mod:hover{border-color:var(--muted)}
+.mod[aria-pressed="true"]{border-color:var(--arc);box-shadow:0 0 0 3px var(--arc-soft)}
+.mod:focus-visible{outline:2px solid var(--arc);outline-offset:3px}
+.mod .t{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.mod h3{font-size:22px}
+.mod p{font-size:14.5px;color:var(--muted)}
+.soon{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);border:1px solid var(--rule);padding:2px 6px;border-radius:3px}
+.flow{border:1px solid var(--ink);border-radius:8px;background:var(--sheet);display:grid;grid-template-columns:240px 1fr;min-height:320px;overflow:hidden}
+@media (max-width:760px){.flow{grid-template-columns:1fr}}
+.flow aside{border-right:1px solid var(--rule);padding:14px;display:flex;flex-direction:column;gap:6px;background:color-mix(in srgb,var(--paper) 60%,var(--sheet))}
+.flow aside .label{padding:4px 6px 8px}
+.stepbtn{all:unset;cursor:pointer;display:flex;gap:10px;align-items:center;padding:9px 10px;border-radius:6px;font-size:14.5px}
+.stepbtn .n{font-family:var(--mono);font-size:12px;width:24px;height:24px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--rule);color:var(--muted);flex:none}
+.stepbtn:hover{background:var(--sheet)}
+.stepbtn[aria-selected="true"]{background:var(--sheet);box-shadow:inset 3px 0 0 var(--arc)}
+.stepbtn[aria-selected="true"] .n{background:var(--arc);border-color:var(--arc);color:#fff}
+.stepbtn:focus-visible{outline:2px solid var(--arc)}
+.flow .pane{padding:22px 24px;display:flex;flex-direction:column;gap:14px}
+.flow .pane h3{font-size:26px}
+.flow .pane ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:15px}
+.flow .nav{display:flex;justify-content:space-between;margin-top:auto;padding-top:12px;border-top:1px solid var(--rule)}
+.btn{all:unset;cursor:pointer;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.05em;padding:8px 12px;border:1px solid var(--rule);border-radius:4px}
+.btn:hover{border-color:var(--ink)}
+.btn:focus-visible{outline:2px solid var(--arc)}
+.btn[disabled]{opacity:.35;cursor:default}
+.btn.primary{background:var(--arc);border-color:var(--arc);color:#fff}
+table.std{width:100%;border-collapse:collapse;font-size:14.5px}
+.tablebox{overflow-x:auto;border:1px solid var(--rule);border-radius:6px;background:var(--sheet)}
+table.std th,table.std td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.std th{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:500}
+table.std tr:last-child td{border-bottom:0}
+
+/* timeline */
+.timeline{display:flex;flex-direction:column;border-top:1px solid var(--ink)}
+.job{display:grid;grid-template-columns:170px 1fr;gap:24px;padding:24px 0;border-bottom:1px solid var(--rule)}
+.job .when{font-family:var(--mono);font-size:12.5px;color:var(--muted);padding-top:4px}
+.job ul{margin:10px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:15.5px;max-width:72ch}
+.job .where{color:var(--muted);font-size:15px}
+@media (max-width:640px){.job{grid-template-columns:1fr;gap:6px}}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.card{background:var(--sheet);border:1px solid var(--rule);border-radius:6px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.card p{font-size:15px;color:var(--muted)}
+
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+@media (max-width:760px){.contact{grid-template-columns:1fr}}
+.cline{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:16px 0;border-bottom:1px solid var(--rule);flex-wrap:wrap}
+.cline a{font-size:18px;font-weight:500;text-decoration-color:var(--arc);text-underline-offset:4px}
+.copy{all:unset;cursor:pointer;font-family:var(--mono);font-size:11px;text-transform:uppercase;padding:5px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--muted)}
+.copy:hover{color:var(--ink);border-color:var(--ink)}
+
+footer{border-top:1px solid var(--rule);padding:22px 0 40px;font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* lightbox */
+.lb{position:fixed;inset:0;background:rgba(10,12,14,.88);display:none;place-items:center;z-index:50;padding:24px}
+.lb.on{display:grid}
+.lb img{max-height:84vh;max-width:min(1200px,100%);background:#fff;border-radius:4px}
+.lb p{color:#e8eae6;font-size:14px;margin-top:10px;text-align:center;max-width:none}
+.lb button{position:absolute;top:16px;right:16px}
+.lb .btn{color:#fff;border-color:#666}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <a class="brand" href="#home"><i aria-hidden="true"></i>Bardia Naraghi Farshad</a>
+    <nav aria-label="Main">
+      <a href="#work" data-nav="work">Work</a>
+      <a href="#weld-quality-suite" data-nav="weld-quality-suite">Weld Quality Suite</a>
+      <a href="#experience" data-nav="experience">Experience</a>
+      <a href="#leadership" data-nav="leadership">Teaching &amp; Leadership</a>
+      <a href="#contact" data-nav="contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ============ HOME ============ -->
+<article class="page" id="p-home" data-page="home">
+  <div class="hero">
+    <div class="kicker">
+      <span class="pill hot">Materials · Manufacturing · Joining · Robotics</span>
+      <span class="pill">MASc, University of Waterloo · Apr 2027</span>
+      <span class="pill">P.Eng. (PEO) in progress</span>
+    </div>
+   <div class="hero-top"><div class="intro">
+
+    <h1>Materials and manufacturing engineer</h1>
+    <p class="lead">I am a materials and manufacturing engineer with a B.Sc. in Materials Science and Engineering and an M.A.Sc. from the University of Waterloo. My work covers process development, materials characterization and mechanical testing, using statistics and machine learning to turn experimental data into decisions. I have worked with industry partners, built software tools that automate inspection, and earlier managed operations and documentation at an engineering company. I also teach and mentor students in materials science and joining.</p>
+   </div>
+   <figure class="portrait"><img src="img/headshot.jpg" alt="Portrait of Bardia Naraghi Farshad"><figcaption>Ontario, Canada</figcaption></figure>
+   </div>
+
+    <figure class="profile-fig" style="margin:0">
+      <svg viewBox="0 0 1000 330" role="img" aria-label="Lap fillet weld schematic: upper toe T1, base-sheet toe T2, root R, legs a and b, theoretical throat t_th, actual throat t_e, undercut depth d_u, flank angle theta and toe radius rho">
+        <rect class="sheet" x="20" y="90" width="310" height="130"/>
+        <rect class="sheet" x="20" y="220" width="960" height="55"/>
+        <path class="weld" d="M330 90 Q338 99 346 92 C410 84 490 118 540 168 C565 192 585 214 600 220 L330 220 Z"/>
+        <path class="ln draw" d="M20 90 L330 90 Q338 99 346 92 C410 84 490 118 540 168 C565 192 585 214 600 220 L980 220"/>
+        <line class="base" x1="330" y1="90" x2="600" y2="220"/>
+        <line class="base" x1="330" y1="90" x2="330" y2="220"/>
+        <line class="base" x1="346" y1="90" x2="705" y2="90"/>
+        <line class="st" x1="330" y1="220" x2="380.8" y2="114.5"/>
+        <line class="acc" x1="336" y1="226" x2="398.6" y2="96"/>
+        <path class="st" d="M655 220 A55 55 0 0 0 557 185"/>
+        <circle class="acc" cx="600" cy="192" r="28" stroke-dasharray="3 3"/>
+        <line class="acc" x1="600" y1="192" x2="620" y2="172"/>
+        <path class="dim" d="M690 90 L690 220 M684 90 L696 90 M684 220 L696 220"/>
+        <path class="dim" d="M330 232 L330 312 M600 232 L600 312 M330 302 L600 302"/>
+        <path class="dim" d="M338 296 L330 302 L338 308 M592 296 L600 302 L592 308 M684 98 L690 90 L696 98 M684 212 L690 220 L696 212"/>
+        <path class="dim" d="M348 98 L362 98"/>
+        <circle class="dot" cx="330" cy="90" r="5"/>
+        <circle class="dot" cx="600" cy="220" r="5"/>
+        <path class="dim" d="M323 213 L337 227 M337 213 L323 227" style="stroke:var(--ink);stroke-width:1.6"/>
+        <text class="m" x="300" y="74">T<tspan class="sb" dy="6">1</tspan></text>
+        <text class="m" x="590" y="252">T<tspan class="sb" dy="6">2</tspan></text>
+        <text class="m" x="354" y="76">d<tspan class="sb" dy="6">u</tspan></text>
+        <text class="m" x="470" y="108">c</text>
+        <text class="m" x="314" y="170">t<tspan class="sb" dy="6">th</tspan></text>
+        <text class="m a" x="392" y="150">t<tspan class="sb" dy="6">e</tspan></text>
+        <text class="m" x="300" y="252">R</text>
+        <text class="m" x="705" y="162">a</text>
+        <text class="m" x="458" y="295">b</text>
+        <text class="m s" x="660" y="196">θ</text>
+        <text class="m a" x="622" y="166">ρ</text>
+      </svg>
+      <figcaption class="figcap">Lap fillet weld, schematic. <i>T</i><sub>1</sub>, <i>T</i><sub>2</sub>: upper and base-sheet toes. <i>R</i>: root. <i>a</i>, <i>b</i>: legs. <i>t</i><sub>th</sub>, <i>t</i><sub>e</sub>: theoretical and actual throat. <i>d</i><sub>u</sub>: undercut depth. <i>θ</i>: flank angle. <i>ρ</i>: toe radius. Weld Quality Suite finds <i>T</i><sub>1</sub> and <i>T</i><sub>2</sub> in the laser profile, measures the rest and checks it against ISO 5817, AWS and IIW limits.</figcaption>
+    </figure>
+
+    <div class="stats" aria-label="Key figures">
+      <div><b>550</b><span>coupons in a robotic GMAW weld matrix</span></div>
+      <div><b>6</b><span>AHSS and UHSS grades, 3 thickness combinations</span></div>
+      <div><b>90%</b><span>less inspection time with my geometry software</span></div>
+      <div><b>25%</b><span>ahead of schedule on the optimization phase</span></div>
+    </div>
+  </div>
+
+  <section class="stack">
+    <div class="label">Selected work</div>
+    <div class="worklist" id="home-work"></div>
+  </section>
+
+  <section class="talk">
+    <figure><button data-zoom style="all:unset;cursor:zoom-in;display:block"><img src="img/com2026.jpg" alt="Bardia presenting at the COM 2026 podium"></button></figure>
+    <div class="stack">
+      <div class="label">Speaking · COM 2026, Calgary · Aug 17–20, 2026</div>
+      <h3>Correlation between process parameters, microstructural evolution and mechanical performance in gas metal arc welded ultra-high-strength steels</h3>
+      <p class="muted">I presented this work at the Conference of Metallurgy and Materials (MetSoc), with Dr. Elliot Biro. The project is supported by NSERC and Martinrea. A CSMC 2027 paper (Victoria, BC) is in preparation, and a journal paper on Bayesian-optimized weld geometry is under way.</p>
+      <p><span class="pill hot">Next: CSMC 2027 · Victoria, BC</span></p>
+    </div>
+  </section>
+
+  <section class="cols">
+    <div class="stack">
+      <div class="label">Now</div>
+      <h2>Graduate research engineer at CAMJ</h2>
+    </div>
+    <div class="stack">
+      <p>At Waterloo's Centre for Advanced Materials Joining I lead the welding side of an NSERC project with <strong>Martinrea International</strong>. The project predicts the fatigue strength of GMAW joints in automotive frames, accounting for manufacturing variability. I run the robot cell, design the experiments, qualify the welds, and present results to Martinrea's engineering and quality teams every month.</p>
+      <p class="muted">I'm open to welding, process and materials engineering roles in Ontario, and to research positions, starting spring 2027.</p>
+      <div><a class="btn primary" href="#contact">Get in touch</a></div>
+    </div>
+  </section>
+</article>
+
+<!-- ============ WORK INDEX ============ -->
+<article class="page" id="p-work" data-page="work">
+  <div class="stack">
+    <div class="label">Work</div>
+    <h2>Projects</h2>
+    <p class="lead">Six case studies, from robotic weld development to atom-scale alloy modelling. Each one says what I did, how I did it and what came out of it.</p>
+  </div>
+  <section class="worklist" id="all-work"></section>
+</article>
+
+<!-- ============ CASE: GMAW ============ -->
+<article class="page" id="p-gmaw-optimization" data-page="gmaw-optimization">
+  <div class="stack">
+    <a class="back" href="#work">← All work</a>
+    <div class="label">01 · Process development · 2025–present</div>
+    <h2>Robotic GMAW process optimization for AHSS and UHSS</h2>
+    <p class="lead">Automotive frames are moving to thinner, stronger steels, and their fatigue life depends on weld toe geometry. My job was to find process windows that give a repeatable, fatigue-friendly bead on every grade and joint, then prove those windows hold up.</p>
+    <dl class="spec">
+      <div><dt>Process</dt><dd>Robotic GMAW, CV and pulse</dd></div>
+      <div><dt>Cell</dt><dd>Fanuc industrial robot</dd></div>
+      <div><dt>Joints</dt><dd>Lap fillet, T-joint; similar and dissimilar</dd></div>
+      <div><dt>Materials</dt><dd>HSLA 340 / 420 / 550, CR980, UHSS100</dd></div>
+      <div><dt>Methods</dt><dd>Definitive screening, CCD response surface, ANOVA</dd></div>
+      <div><dt>Partner</dt><dd>Martinrea International (NSERC)</dd></div>
+    </dl>
+  </div>
+
+  <section class="cols">
+    <div class="stack">
+      <h3>What I did</h3>
+      <ol class="steps">
+        <li><div><h4>Planned a 550-coupon weld matrix</h4><p>I programmed, set up and fixtured the Fanuc cell myself. I designed custom jigs for the lap and T-joints so every coupon is clamped the same way.</p></div></li>
+        <li><div><h4>Screened every joint configuration first</h4><p>I ran definitive screening designs for lap fillet and T-joints in thick-thick, thin-thin and dissimilar sheet combinations. They covered 8 parameters: wire feed speed, voltage, travel speed, CTWD, gap, and work and travel angles. Screening showed which parameters matter for each configuration.</p></div></li>
+        <li><div><h4>Separated good welds from bad ones with data</h4><p>I scored each screening weld pass/fail and trained a decision-tree classifier alongside ANOVA to find which settings drove porosity and humping.</p></div></li>
+        <li><div><h4>Then optimized with response surface methodology</h4><p>With the important factors known, I built central-composite response surfaces in Python and Minitab for toe radius and flank angle. I fitted separate models for each joint type and sheet combination, and for CV and pulse, which I compared with two-sample t-tests.</p></div></li>
+        <li><div><h4>Validated the windows</h4><p>I re-welded the selected candidates and re-measured them to confirm the geometry repeats before any mechanical testing.</p></div></li>
+      </ol>
+    </div>
+    <div class="stack">
+      <h3>Scope</h3>
+      <div class="result">
+        <div><b>550</b><span>coupons welded on the robotic cell</span></div>
+        <div><b>6</b><span>AHSS and UHSS grades</span></div>
+        <div><b>8</b><span>process parameters studied</span></div>
+      </div>
+      <p class="note">Process windows and results belong to the project partner and are not shown here.</p>
+    </div>
+  </section>
+
+  <section class="gallery">
+    <figure class="g6"><button data-zoom><img src="img/good-lap-1.jpg" alt="Smooth, uniform lap fillet weld bead from an optimized run"></button><figcaption>Optimized lap fillet</figcaption></figure>
+    <figure class="g6"><button data-zoom><img src="img/good-t-1.jpg" alt="Uniform T-joint fillet weld"></button><figcaption>Optimized T-joint fillet</figcaption></figure>
+    <figure class="g5"><button data-zoom><img src="img/fixture-robot.jpg" alt="Lap-joint fixture mounted in the robotic GMAW cell"></button><figcaption>Custom fixture in the robot cell</figcaption></figure>
+    <figure class="g7"><button data-zoom><img src="img/defect-2.jpg" alt="Weld bead with heavy surface porosity from a screening run"></button><figcaption>A failed screening weld: surface porosity. Bad runs like this one taught the classifier where the process window ends.</figcaption></figure>
+    <figure class="g4"><button data-zoom><img src="img/defect-4.jpg" alt="Weld bead with humping and an irregular toe"></button><figcaption>Humping and an irregular toe</figcaption></figure>
+  </section>
+</article>
+
+<!-- ============ CASE: MECH TESTING ============ -->
+<article class="page" id="p-mechanical-testing" data-page="mechanical-testing">
+  <div class="stack">
+    <a class="back" href="#work">← All work</a>
+    <div class="label">03 · Qualification and testing · 2026</div>
+    <h2>Weld qualification: geometry, hardness and joint strength</h2>
+    <p class="lead">An optimized bead only matters if it carries load. I designed the coupons and test matrix to study the effect of manufacturing discontinuities on joint performance, and mapped HAZ hardness to understand failure. I ran the study on both UHSS and AHSS steels.</p>
+    <dl class="spec">
+      <div><dt>Standards</dt><dd>AWS D8.1M, AWS D8.8M, IIW fatigue recommendations</dd></div>
+      <div><dt>Focus</dt><dd>Effect of manufacturing discontinuities, UHSS and AHSS</dd></div>
+      <div><dt>Tests</dt><dd>Lap-shear, fatigue, Vickers HV0.2 mapping</dd></div>
+      <div><dt>Analysis</dt><dd>Macro-sectioning, SEM fractography, metallography</dd></div>
+    </dl>
+  </div>
+
+  <section class="cols">
+    <div class="stack">
+      <h3>What I did</h3>
+      <ol class="steps">
+        <li><div><h4>Redesigned the T-joint coupon</h4><p>Cross-sectioning destroys a specimen and shows the toe at only one slice. That's too slow for 550 welds. I designed a water-jet-cut T-joint that the Keyence scanner can measure along the whole weld without destroying it and keeps the coupon for mechanical testing.</p></div></li>
+        <li><div><h4>Built a controlled test matrix</h4><p>I designed an experimental matrix to study the effect of manufacturing discontinuities on lap-fillet joints, for both UHSS and AHSS steels.</p></div></li>
+        <li><div><h4>Mapped hardness across the joint</h4><p>Full-field HV0.2 maps of about 2,100 indents each (around 10 hours per map), plus line profiles through each sheet, to locate HAZ softening.</p></div></li>
+        <li><div><h4>Traced failures to root causes</h4><p>I examined fracture locations, bead discontinuities and HAZ softening using SEM fracture surfaces and the microstructure of each HAZ zone.</p></div></li>
+      </ol>
+    </div>
+    <div class="stack">
+      <h3>Status</h3>
+      <p>This study is the basis of my first-author journal paper, now in preparation. Results will be shared once it is published.</p>
+    </div>
+  </section>
+
+  <section class="gallery">
+    <figure class="g12"><button data-zoom><img src="img/hardness-map.jpg" alt="Vickers microhardness map across a lap fillet weld"></button><figcaption>HV0.2 hardness mapping across a lap fillet joint</figcaption></figure>
+    <figure class="g4"><button data-zoom><img src="img/lapshear-grips.jpg" alt="Welded lap-shear coupon clamped in the grips of a test frame"></button><figcaption>Lap-shear coupon in the test frame grips</figcaption></figure>
+    <figure class="g8"><button data-zoom><img src="img/macro-lap.jpg" alt="Macro cross-section of a lap fillet weld"></button><figcaption>Lap fillet macro-section</figcaption></figure>
+    <figure class="g4"><button data-zoom><img src="img/tcoupon.jpg" alt="Water-jet cut T-joint coupon plate"></button><figcaption>Water-jet T-joint coupons</figcaption></figure>
+    <figure class="g4"><button data-zoom><img src="img/macro-t.jpg" alt="Macro cross-section of a T-joint fillet weld"></button><figcaption>T-joint macro-section</figcaption></figure>
+    <figure class="g4"><button data-zoom><img src="img/fixture-t.jpg" alt="T-joint welding fixture"></button><figcaption>T-joint fixture</figcaption></figure>
+  </section>
+</article>
+
+<!-- ============ CASE: MATERIALS ============ -->
+<article class="page" id="p-materials-characterization" data-page="materials-characterization">
+  <div class="stack">
+    <a class="back" href="#work">← All work</a>
+    <div class="label">04 · Characterization · 2025–2026</div>
+    <h2>Base-metal characterization of eight steel grades</h2>
+    <p class="lead">Before welding anything, I characterized every as-received sheet. That gives a baseline for HAZ changes and real inputs for the project's models.</p>
+    <dl class="spec">
+      <div><dt>Grades</dt><dd>HSLA 340, 420, 550 (coated and uncoated), CR980, UHSS100</dd></div>
+      <div><dt>Mechanical</dt><dd>ASTM E8 tensile, 3D DIC (Aramis 5M), MTS 100 kN frame</dd></div>
+      <div><dt>Microscopy</dt><dd>SEM, EDS, EBSD, Keyence VHX optical</dd></div>
+      <div><dt>Other</dt><dd>Vickers hardness, ImageJ phase fractions</dd></div>
+    </dl>
+  </div>
+  <section class="cols">
+    <div class="stack">
+      <h3>What I did</h3>
+      <ol class="steps">
+        <li><div><h4>Tensile testing with full-field strain</h4><p>3D digital image correlation captured strain localization and anisotropy in the rolling direction.</p></div></li>
+        <li><div><h4>Microstructure and phases</h4><p>SEM at 2,000× and 4,000×, EDS, and optical phase-fraction measurements taken at five locations through each sheet.</p></div></li>
+        <li><div><h4>Hardness baselines</h4><p>Base-metal hardness for comparison with the weld and HAZ maps.</p></div></li>
+      </ol>
+    </div>
+    <div class="stack">
+      <h3>Why it matters</h3>
+      <p>Knowing the starting microstructure and properties of each grade gives a baseline for comparing the weld and HAZ, and real inputs for the project's models.</p>
+    </div>
+  </section>
+  <section class="gallery">
+    <figure class="g4"><button data-zoom><img src="img/dic.jpg" alt="DIC strain field on a tensile specimen"></button><figcaption>3D DIC strain field just before fracture</figcaption></figure>
+    <figure class="g4"><button data-zoom><img src="img/sem-cr980.jpg" alt="SEM micrograph of CR980 dual-phase steel"></button><figcaption>CR980, SEM 2,000×</figcaption></figure>
+    <figure class="g4"><button data-zoom><img src="img/sem-hsla.jpg" alt="SEM micrograph of HSLA 340 steel"></button><figcaption>HSLA 340, SEM 2,000×</figcaption></figure>
+    <figure class="g6"><button data-zoom><img src="img/om.jpg" alt="Optical micrograph of an etched steel sheet"></button><figcaption>Optical micrograph for phase fraction</figcaption></figure>
+    <figure class="g6"><button data-zoom><img src="img/mts.jpg" alt="MTS tensile frame with DIC cameras"></button><figcaption>MTS frame with the DIC camera setup</figcaption></figure>
+  </section>
+</article>
+
+<!-- ============ CASE: BAYESIAN OPT ============ -->
+<article class="page" id="p-bayesian-optimization" data-page="bayesian-optimization">
+  <div class="stack">
+    <a class="back" href="#work">← All work</a>
+    <div class="label">05 · Research in progress · Nov 2026 – Feb 2027</div>
+    <h2>Data-efficient control of GMAW fillet weld geometry</h2>
+    <p class="lead">Every new stack-up or wire still means another full DOE. In my next paper I build one Gaussian-process model per geometric feature from the existing Martinrea DOE, then invert the models with Bayesian optimization to recommend parameters that reach a target geometry with as few validation welds as possible.</p>
+    <dl class="spec">
+      <div><dt>Models</dt><dd>Gaussian process regression, one per feature</dd></div>
+      <div><dt>Inverse design</dt><dd>Bayesian optimization within the process window</dd></div>
+      <div><dt>Features</dt><dd>Toe angle, toe radius, leg lengths, throat</dd></div>
+      <div><dt>Interpretation</dt><dd>SHAP values, GPR length-scales, compared with ANOVA</dd></div>
+      <div><dt>Data</dt><dd>Martinrea DOE + Weld Quality Suite measurements</dd></div>
+      <div><dt>Output</dt><dd>Journal paper; parameter control maps for industry</dd></div>
+    </dl>
+  </div>
+  <section class="cols">
+    <div class="stack">
+      <h3>The loop</h3>
+      <ol class="steps">
+        <li><div><h4>Weld</h4><p>Robotic GMAW lap fillet and T-joints, using the parameter sets chosen for each round.</p></div></li>
+        <li><div><h4>Scan and measure</h4><p>Keyence 3D scans processed by my numerical-gradient method into toe and leg features. A subset is cross-sectioned each round to check the scans.</p></div></li>
+        <li><div><h4>Model</h4><p>Per-feature GPR gives each prediction with a calibrated uncertainty.</p></div></li>
+        <li><div><h4>Choose the next welds</h4><p>The acquisition function picks the most informative welds. After the final round, the models become control maps.</p></div></li>
+      </ol>
+    </div>
+    <div class="stack">
+      <h3>How success is judged</h3>
+      <div class="result">
+        <div><b>R² ≥ 0.80</b><span>cross-validated, for every feature model</span></div>
+        <div><b>±10%</b><span>of target geometry within 3 validation rounds</span></div>
+      </div>
+      <p>GPR-based Bayesian optimization has been used for GTAW bead geometry and for wire-arc additive manufacturing. As far as I know, it hasn't yet been applied to the fatigue-relevant toe features of GMAW lap fillet and T-joints on automotive stack-ups.</p>
+      <p class="note">Status: planned November 2026 to February 2027, with data consolidation starting first. Results will be added here as the validation rounds finish.</p>
+    </div>
+  </section>
+</article>
+
+<!-- ============ CASE: EARLY RESEARCH ============ -->
+<article class="page" id="p-early-research" data-page="early-research">
+  <div class="stack">
+    <a class="back" href="#work">← All work</a>
+    <div class="label">06 · Undergraduate research · 2020–2023</div>
+    <h2>Magnesium alloys for bone implants, modelled atom by atom</h2>
+    <p class="lead">At K. N. Toosi University I used molecular dynamics to study how zinc and calcium change the mechanical response of magnesium, aiming for implants that match the stiffness of bone.</p>
+    <dl class="spec">
+      <div><dt>Tools</dt><dd>LAMMPS, OVITO (PTM, DXA)</dd></div>
+      <div><dt>Scale</dt><dd>About 350,000-atom supercells, 12 compositions</dd></div>
+      <div><dt>Alloying</dt><dd>Zn 0–3 wt%, Ca 0–0.8 wt%</dd></div>
+      <div><dt>Advisor</dt><dd>Dr. Abbas Montazeri Hedesh</dd></div>
+      <div><dt>Thesis</dt><dd>B.Sc. project, K. N. Toosi University, Feb 2023</dd></div>
+    </dl>
+  </div>
+  <section class="cols">
+    <div class="stack">
+      <h3>Result</h3>
+      <div class="result"><div><b>~35%</b><span>lower elastic modulus with targeted alloying, closer to human bone</span></div></div>
+      <p>Adding zinc to pure magnesium raised the elastic modulus and lowered the yield strength. Adding calcium to the Mg–Zn alloys cut the modulus sharply and raised the yield strength slightly in some compositions.</p>
+      <p>I analysed the deformation mechanisms with structure identification (PTM) and dislocation extraction (DXA). Pure magnesium deformed mainly by twinning. In the alloys, Shockley partial dislocations and stacking faults formed on the basal plane.</p>
+    </div>
+    <div class="stack">
+      <h3>Before that: biomaterials lab</h3>
+      <p>With Dr. E. Salahinejad I made scaffolds by 3D printing and electrospinning, wrote the SOPs for the lab's critical instruments, and trained junior students as the lab superuser.</p>
+    </div>
+  </section>
+  <section class="gallery">
+    <figure class="g6"><button data-zoom><img src="img/md-supercell.jpg" alt="Magnesium simulation supercell with zinc and calcium solute atoms"></button><figcaption>Starting supercell: Mg (green) with substituted Zn and Ca atoms</figcaption></figure>
+    <figure class="g6"><button data-zoom><img src="img/md-twinning.jpg" alt="PTM structure analysis of deformed pure magnesium showing twins"></button><figcaption>PTM structure analysis after tension: twinning in pure Mg</figcaption></figure>
+    <figure class="g12"><button data-zoom><img src="img/md-stress-strain.jpg" alt="Simulated stress-strain curves for Mg-2.0Zn-xCa alloys"></button><figcaption>Simulated stress–strain curves for Mg-2.0Zn-xCa alloys</figcaption></figure>
+    <figure class="g6"><button data-zoom><img src="img/md-binary.jpg" alt="DXA dislocation network and stacking faults in binary Mg-2.0Zn"></button><figcaption>Dislocations (lines) and stacking faults, binary Mg-2.0Zn (DXA)</figcaption></figure>
+    <figure class="g6"><button data-zoom><img src="img/md-ternary.jpg" alt="DXA dislocation network in a ternary Mg-Zn-Ca alloy"></button><figcaption>The same analysis for the ternary Mg-Zn-Ca alloy</figcaption></figure>
+  </section>
+</article>
+
+<!-- ============ SOFTWARE ============ -->
+<article class="page" id="p-weld-quality-suite" data-page="weld-quality-suite">
+  <div class="stack">
+    <a class="back" href="#work">← All work</a>
+    <div class="label">02 · Software · 2026</div>
+    <div class="app-head">
+      <div class="stack">
+        <h2>Weld Quality Suite</h2>
+        <p class="lead">A desktop program I wrote that measures welds automatically from laser scans, so they no longer have to be measured by hand.</p>
+      </div>
+      <div class="result">
+        <div><b>90%</b><span>less inspection time</span></div>
+        <div><b>25%</b><span>earlier finish on the optimization phase</span></div>
+      </div>
+    </div>
+    <div class="stack" style="gap:12px">
+      <span class="label">Modules</span>
+      <div class="modules">
+        <div class="card"><h3>Geometry quality check</h3><p>Measures each weld from its laser scan and checks it against welding and fatigue standards.</p></div>
+        <div class="card"><h3>Heat input calculation</h3><p>Calculates heat input for each weld from the recorded welding current and voltage.</p></div>
+        <div class="card"><h3>Find parameters</h3><p>Suggests starting welding parameters for a material and process from published sources.</p></div>
+        <div class="card"><h3>Batch report <span class="soon" style="vertical-align:middle">Coming soon</span></h3><p>One report per batch that combines geometry, quality check and heat input.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="gallery">
+    <figure class="g5"><video src="img/keyence-scan.mp4" poster="img/keyence-scan-poster.jpg" autoplay muted loop playsinline controls aria-label="T-joint coupon being scanned under the Keyence VHX microscope"></video><figcaption>Scanning a T-joint coupon on the Keyence VHX</figcaption></figure>
+    <figure class="g7"><button data-zoom><img src="img/hero-scan.jpg" alt="3D Keyence scan of a lap fillet weld coloured by height"></button><figcaption>3D height scan of a lap fillet weld, the program's input</figcaption></figure>
+  </section>
+
+  <p class="note">If you'd like a demo, <a href="#contact">get in touch</a>.</p>
+</article>
+
+<!-- ============ EXPERIENCE ============ -->
+<article class="page" id="p-experience" data-page="experience">
+  <div class="stack">
+    <div class="label">Experience</div>
+    <h2>Where I've worked</h2>
+  </div>
+  <section class="timeline">
+    <div class="job"><div class="when">Apr 2025 – present</div><div>
+      <h3>Graduate Research Engineer</h3>
+      <div class="where">University of Waterloo, Centre for Advanced Materials Joining · Advisor: Dr. Elliot Biro, P.Eng. · Industry partner: Martinrea International</div>
+      <ul>
+        <li><b>Weld process development:</b> developed robotic GMAW procedures for lap and T-joints across 6 AHSS/UHSS grades, using DOE screening and response-surface optimization to set validated process windows.</li>
+        <li><b>Industrial robot implementation:</b> planned and ran a 550-coupon weld matrix on a Fanuc GMAW cell, including programming, fixturing and troubleshooting.</li>
+        <li><b>Qualification and standards:</b> qualified welds to AWS D8.1M, AWS D8.8M and IIW fatigue recommendations through macro-sectioning, hardness profiling, lap-shear and fatigue testing.</li>
+        <li><b>Root-cause analysis:</b> linked discontinuities, bead geometry and HAZ softening to losses in joint strength and fatigue life, using SEM, EBSD, 3D scanning, metallography and hardness mapping.</li>
+        <li><b>Inspection software:</b> built a Python tool that measures weld geometry from 3D scans and generates inspection reports, cutting inspection time by 90%.</li>
+        <li><b>Coordination:</b> led monthly technical reviews with Martinrea's engineering and quality teams and coordinated a 5-person team to 100% on-time delivery.</li>
+        <li><b>Training and documentation:</b> trained and supervised 3 co-op students; wrote technical reports and papers, and presented at MetSoc COM 2026.</li>
+      </ul></div></div>
+    <div class="job"><div class="when">Sep 2025 – present</div><div>
+      <h3>Graduate Teaching Assistant</h3>
+      <div class="where">University of Waterloo · BME 282, ME 535, ME 115</div>
+      <ul>
+        <li>BME 282, Materials Science for Biomedical Engineers (Fall 2025, Fall 2026): weekly tutorials for cohorts of 78 and 90+ students.</li>
+        <li>ME 535, Welding and Joining Processes (Winter 2026): led laboratory sessions and tutorials on the metallurgy and mechanics of joining.</li>
+        <li>ME 115, Materials Science (Spring 2026): tutorials and laboratory sessions for about 120 first-year mechanical engineering students.</li>
+      </ul></div></div>
+    <div class="job"><div class="when">Feb 2023 – Jan 2025</div><div>
+      <h3>General Manager</h3>
+      <div class="where">Abyaran Pahndasht Engineering Company, Tehran · promoted from Commercial Engineer</div>
+      <ul>
+        <li><b>Finance digital transformation:</b> led the company-wide move from Excel-based accounting to a single centralized accounting system, improving reporting accuracy and audit readiness.</li>
+        <li><b>Financial operations:</b> managed day-to-day accounting, reconciliations and bank oversight; streamlined three-way matching of purchase orders, receipts and invoices.</li>
+        <li><b>Process automation:</b> introduced automated administrative workflows, a standardized document-coding system and clear approval routes that removed decision bottlenecks.</li>
+        <li><b>Organizational restructuring:</b> redesigned the company structure as it grew to more than 700 employees, adding intermediate management roles to speed up decisions.</li>
+      </ul></div></div>
+    <div class="job"><div class="when">Feb 2022 – Feb 2023</div><div>
+      <h3>Commercial Engineer</h3>
+      <div class="where">Abyaran Pahndasht Engineering Company, Tehran</div>
+      <ul>
+        <li>Prepared cost estimates for engineering projects and tenders, covering materials, labour and overhead.</li>
+        <li>Took part in tenders from bid preparation through submission and client meetings, and negotiated project funding with clients.</li>
+        <li>Joined engineering design reviews to align technical solutions with budget.</li>
+        <li>Managed bookkeeping, cost tracking, bank reconciliations and company tax filings.</li>
+      </ul></div></div>
+    <div class="job"><div class="when">Sep 2021 – Jan 2022</div><div>
+      <h3>Quality Control (Co-op)</h3>
+      <div class="where">Alfa Sanat Pars Co. (industrial temperature solutions), Tehran</div>
+      <ul>
+        <li>Performed resistance and insulation testing on ceramic, silicon carbide and cartridge heating elements.</li>
+        <li>Inspected thermowells and high-temperature ceramic parts for resistance to thermal shock and corrosion.</li>
+        <li>Documented QA metrics and calibration data so products met internal manufacturing standards before shipment.</li>
+      </ul></div></div>
+    <div class="job"><div class="when">Mar 2021 – Oct 2023</div><div>
+      <h3>Research Assistant</h3>
+      <div class="where">K. N. Toosi University of Technology · Advisor: Dr. Abbas Montazeri Hedesh</div>
+      <ul>
+        <li>Ran large-scale molecular dynamics simulations in LAMMPS of how Zn and Ca affect deformation in magnesium alloys, and compared the results with published experiments.</li>
+        <li>Showed that targeted alloying lowered the elastic modulus by about 35%, closer to that of bone. <a href="#early-research">See the project</a></li>
+      </ul></div></div>
+    <div class="job"><div class="when">Oct 2020 – Mar 2021</div><div>
+      <h3>Research Assistant (Co-op)</h3>
+      <div class="where">K. N. Toosi University of Technology · Advisor: Dr. E. Salahinejad</div>
+      <ul>
+        <li>Wrote standard operating procedures for critical lab instruments and trained junior students as lab superuser.</li>
+        <li>Fabricated scaffolds by 3D printing and electrospinning, and prepared research posters and seminar presentations.</li>
+      </ul></div></div>
+  </section>
+
+  <section class="stack" id="publications">
+    <div class="label">Papers and talks</div>
+    <div class="pubs">
+      <div class="pub"><div class="st">Published</div><div><h4>Machine learning-based classification of resistance spot welding quality using process parameter design</h4><p><b>B. NaraghiFarshad</b> (third author). <a href="https://www.researchgate.net/publication/412213332_Machine_learning-based_classification_of_resistance_spot_welding_quality_using_process_parameter_design">View on ResearchGate</a></p></div></div>
+      <div class="pub"><div class="st">Upcoming · 2027</div><div><h4>CSMC 2027 conference paper</h4><p>Victoria, British Columbia. My next conference presentation.</p></div></div>
+      <div class="pub"><div class="st">Presented · Aug 2026</div><div><h4>Correlation between process parameters, microstructural evolution and mechanical performance in gas metal arc welded ultra-high-strength steels</h4><p><b>B. NaraghiFarshad</b>, E. Biro. Conference of Metallurgy and Materials (COM 2026), MetSoc, Calgary, Alberta.</p></div></div>
+      <div class="pub"><div class="st">In preparation</div><div><h4>Effect of manufacturing discontinuities on the strength and failure behaviour of GMAW lap-fillet joints in advanced and ultra-high-strength steels</h4><p><b>B. NaraghiFarshad</b>, M. Shojaee, H. Habib, S. Geddes (Martinrea), E. Biro. First author. <a href="#mechanical-testing">See the project</a></p></div></div>
+      <div class="pub"><div class="st">In preparation</div><div><h4>A numerical gradient approach for quantifying weld geometrical features: lap-fillet and T-joint welded structures</h4><p>J. Saffar, <b>B. NaraghiFarshad</b>, M. Shojaee, H. Habib, A. Mostafavi, S. Geddes (Martinrea), E. Biro. <a href="#weld-quality-suite">See the software</a></p></div></div>
+      <div class="pub"><div class="st">In preparation</div><div><h4>Data-efficient control of GMAW fillet weld geometry using Gaussian-process Bayesian optimization</h4><p><b>B. NaraghiFarshad</b> et al. Journal paper, with parameter control maps for industry. <a href="#bayesian-optimization">See the project</a></p></div></div>
+    </div>
+  </section>
+
+  <section class="cols">
+    <div class="stack">
+      <div class="label">Education</div>
+      <div class="card"><h3>M.A.Sc., Mechanical &amp; Mechatronics Engineering (Materials Joining)</h3><p>University of Waterloo · May 2025 – Apr 2027 · Grade A. International Master's Award of Excellence (2026). Coursework includes Fatigue Analysis and Design, Mechanical Metallurgy, Experimental Statistics, and Machine Learning.</p></div>
+      <div class="card"><h3>Graduate studies, Materials and Chemical Engineering</h3><p>University of Alberta · Jan – Apr 2025. Coursework in Welding Metallurgy and Fracture of Materials.</p></div>
+      <div class="card"><h3>B.Sc., Materials Science &amp; Engineering</h3><p>K. N. Toosi University of Technology, Tehran · Sep 2018 – Feb 2023 · Grade A−. Ranked 2nd in the faculty (8th semester).</p></div>
+    </div>
+    <div class="stack">
+      <div class="label">Skills</div>
+      <div class="tags">
+        <span class="tag">Robotic GMAW (Fanuc)</span><span class="tag">GTAW · FCAW · SAW · RSW</span><span class="tag">AWS D8.1M / D8.8M</span><span class="tag">IIW fatigue design</span><span class="tag">ISO 5817</span><span class="tag">DOE · RSM · ANOVA</span><span class="tag">Minitab</span><span class="tag">Python</span><span class="tag">Machine learning</span><span class="tag">SEM · EBSD · EDS</span><span class="tag">Keyence 3D scanning</span><span class="tag">Metallography</span><span class="tag">Vickers hardness</span><span class="tag">3D DIC (Aramis)</span><span class="tag">Primavera P6 · MS Project</span>
+      </div>
+      <div class="label" style="margin-top:12px">Licensure</div>
+      <div class="card"><p>P.Eng. licensure with Professional Engineers Ontario in progress.</p></div>
+    </div>
+  </section>
+</article>
+
+<!-- ============ LEADERSHIP ============ -->
+<article class="page" id="p-leadership" data-page="leadership">
+  <div class="stack">
+    <div class="label">Teaching &amp; leadership</div>
+    <h2>Teaching, mentoring and the welding community</h2>
+    <p class="lead">I've taught more than 300 students in materials science and welding, and I help bring industry to campus through the CWB student chapter.</p>
+  </div>
+  <section class="stack">
+    <div class="label">Teaching assistant, University of Waterloo</div>
+    <div class="cards">
+      <div class="card"><span class="label">Winter 2026</span><h3>ME 535 · Welding &amp; Joining</h3><p>Led laboratory sessions and tutorials on the metallurgy and mechanics of joining.</p></div>
+      <div class="card"><span class="label">Spring 2026</span><h3>ME 115 · Materials Science</h3><p>Tutorials and labs for about 120 first-year mechanical engineering students.</p></div>
+      <div class="card"><span class="label">Fall 2025 · Fall 2026</span><h3>BME 282</h3><p>Materials Science for Biomedical Engineers: weekly tutorials for 78 and then 90+ students, plus a guest lecture.</p></div>
+    </div>
+  </section>
+  <section class="stack">
+    <div class="label">Community</div>
+    <div class="cards">
+      <div class="card"><span class="label">Member</span><h3>CWB Association, Waterloo Student Chapter</h3><p>Helping plan the chapter's Winter 2027 seminar on welding for Ontario's nuclear future: industry talks on CANDU refurbishment and SMR welding codes, handheld laser and cobot demos, and a careers panel.</p></div>
+      <div class="card"><span class="label">Funding &amp; Grants Coordinator</span><h3>MMEGA</h3><p>Mechanical and Mechatronics Engineering Graduate Association, University of Waterloo.</p></div>
+      <div class="card"><span class="label">Mentoring</span><h3>Co-op training</h3><p>Trained and supervised 3 co-op students on the robotic welding cell, safety and coupon preparation.</p></div>
+    </div>
+  </section>
+  <section class="stack">
+    <div class="label">In pictures</div>
+    <div class="gallery">
+      <figure class="g8"><button data-zoom><img src="img/mmega-team.jpg" alt="Group photo of graduate students at an MMEGA event"></button><figcaption>With fellow graduate students at an MMEGA event</figcaption></figure>
+      <figure class="g4"><button data-zoom><img src="img/bonfire.jpg" alt="MMEGA bonfire event poster"></button><figcaption>MMEGA bonfire, Columbia Lake</figcaption></figure>
+      <figure class="g4"><button data-zoom><img src="img/bbq.jpg" alt="MMEGA fall BBQ poster"></button><figcaption>MMEGA fall BBQ, Oct 2026</figcaption></figure>
+      <figure class="g8"><button data-zoom><img src="img/symposium.jpg" alt="Atrium set up for the MMEGA Graduate Research Symposium"></button><figcaption>Venue set up for the MMEGA Graduate Research Symposium</figcaption></figure>
+      <figure class="g7"><button data-zoom><img src="img/arcelormittal.jpg" alt="Group visit at ArcelorMittal"></button><figcaption>Industry visit to ArcelorMittal</figcaption></figure>
+      <figure class="g5"><button data-zoom><img src="img/welding.jpg" alt="Manual GMAW welding in the lab with fume extraction"></button><figcaption>Hands-on GMAW in the lab</figcaption></figure>
+    </div>
+  </section>
+</article>
+
+<!-- ============ CONTACT ============ -->
+<article class="page" id="p-contact" data-page="contact">
+  <div class="contact">
+    <div class="stack">
+      <div class="label">Contact</div>
+      <h2>Contact</h2>
+    </div>
+    <div>
+      <div class="cline"><div><div class="label">Email</div><a href="mailto:baardia.naraghi@gmail.com">baardia.naraghi@gmail.com</a></div><button class="copy" data-copy="baardia.naraghi@gmail.com">Copy</button></div>
+      <div class="cline"><div><div class="label">University email</div><a href="mailto:Bnaraghi@uwaterloo.ca">Bnaraghi@uwaterloo.ca</a></div><button class="copy" data-copy="Bnaraghi@uwaterloo.ca">Copy</button></div>
+      <div class="cline"><div><div class="label">LinkedIn</div><a href="https://www.linkedin.com/in/bardia-nf">linkedin.com/in/bardia-nf</a></div><button class="copy" data-copy="https://www.linkedin.com/in/bardia-nf">Copy</button></div>
+      <div class="cline"><div><div class="label">Location</div><span style="font-size:18px">Ontario, Canada</span></div></div>
+    </div>
+  </div>
+</article>
+
+</main>
+
+<footer><div class="wrap"><span>© 2026 Bardia Naraghi Farshad</span><span>Project images from CAMJ, University of Waterloo</span></div></footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Enlarged image">
+  <button class="btn" id="lb-close">Close</button>
+  <div><img id="lb-img" alt=""><p id="lb-cap"></p></div>
+</div>
+
+<script>
+const WORK = [
+  {id:"gmaw-optimization", no:"01", title:"Robotic GMAW process optimization", text:"550-coupon DOE across 6 AHSS/UHSS grades, ML weld-quality classification and response-surface process windows.", img:"img/fixture-robot.jpg"},
+  {id:"weld-quality-suite", no:"02", title:"Weld Quality Suite (software)", text:"Desktop program that measures welds automatically from laser scans and checks them against quality standards.", img:"img/hero-scan.jpg"},
+  {id:"mechanical-testing", no:"03", title:"Weld qualification and joint strength", text:"Coupon design, test matrix and hardness mapping to study the effect of manufacturing discontinuities.", img:"img/hardness-map.jpg"},
+  {id:"materials-characterization", no:"04", title:"Base-metal characterization", text:"DIC tensile testing, SEM, EDS and phase fractions for eight steel grades.", img:"img/dic.jpg"},
+  {id:"bayesian-optimization", no:"05", title:"Bayesian optimization of weld geometry (in progress)", text:"Gaussian-process models that recommend welding parameters to hit a target toe geometry in as few welds as possible.", img:"img/good-t-1.jpg"},
+  {id:"early-research", no:"06", title:"Mg alloys for bone implants", text:"Molecular dynamics of Zn and Ca alloying; about 35% lower modulus, closer to bone.", img:"img/md-twinning.jpg"}
+];
+function workRow(w){
+  const a=document.createElement('a'); a.className='work'; a.href='#'+w.id;
+  a.innerHTML=`<span class="no">${w.no}</span><h3>${w.title}</h3><p>${w.text}</p>${w.img?`<span class="thumb"><img src="${w.img}" alt=""></span>`:"<span></span>"}`;
+  return a;
+}
+['home-work','all-work'].forEach(id=>{const el=document.getElementById(id); WORK.forEach(w=>el.appendChild(workRow(w)));});
+
+
+/* routing on plain #name */
+const PAGES=[...document.querySelectorAll('.page')].map(p=>p.dataset.page);
+const NAVMAP={"gmaw-optimization":"work","mechanical-testing":"work","materials-characterization":"work","early-research":"work","bayesian-optimization":"work","work":"work","weld-quality-suite":"weld-quality-suite","experience":"experience","leadership":"leadership","contact":"contact"};
+function route(){
+  let h=location.hash.replace('#','');
+  if(!PAGES.includes(h)) h='home';
+  document.querySelectorAll('.page').forEach(p=>p.classList.toggle('on',p.dataset.page===h));
+  document.querySelectorAll('nav a').forEach(a=>a.toggleAttribute('aria-current',a.dataset.nav===NAVMAP[h]));
+  document.querySelectorAll('nav a[aria-current]').forEach(a=>a.setAttribute('aria-current','page'));
+  window.scrollTo(0,0);
+}
+addEventListener('hashchange',route); route();
+
+/* lightbox */
+const lb=document.getElementById('lb'), lbImg=document.getElementById('lb-img'), lbCap=document.getElementById('lb-cap');
+document.querySelectorAll('[data-zoom]').forEach(b=>b.addEventListener('click',()=>{
+  const img=b.querySelector('img'); lbImg.src=img.src; lbImg.alt=img.alt;
+  lbCap.textContent=b.parentElement.querySelector('figcaption')?.textContent||''; lb.classList.add('on'); document.getElementById('lb-close').focus();
+}));
+function closeLb(){lb.classList.remove('on');}
+document.getElementById('lb-close').onclick=closeLb;
+lb.addEventListener('click',e=>{if(e.target===lb)closeLb();});
+addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
+
+/* copy buttons */
+document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{
+  try{await navigator.clipboard.writeText(b.dataset.copy); b.textContent='Copied';}catch(e){b.textContent='Select and copy';}
+  setTimeout(()=>b.textContent='Copy',1800);
+}));
+</script>
+</body>
+</html>
