@@ -151,6 +151,8 @@ nav a[aria-current="page"]{color:var(--ink);background:var(--sheet);box-shadow:i
 .gallery figure img{width:100%;height:100%;object-fit:contain;max-height:420px;margin:auto}
 .gallery figcaption{font-size:13px;color:var(--muted);padding:10px 12px;border-top:1px solid var(--rule)}
 .g4{grid-column:span 4}.g5{grid-column:span 5}.g6{grid-column:span 6}.g7{grid-column:span 7}.g8{grid-column:span 8}.g12{grid-column:span 12}.g3{grid-column:span 3}
+.upcoming-box{flex:1;min-height:240px;margin:12px;border:2px dashed var(--rule);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px;padding:24px}
+.upcoming-box h3{margin:0}.upcoming-box p{margin:0;max-width:34ch;color:var(--muted);font-size:15px;text-align:center}
 @media (max-width:760px){.gallery>figure{grid-column:span 12}}
 .result{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
 .result div{background:var(--sheet);border:1px solid var(--rule);border-left:3px solid var(--arc);border-radius:4px;padding:16px}
@@ -704,9 +706,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
       <figure class="g8"><button data-zoom><img src="img/mmega-team.jpg" alt="Group photo of graduate students at an MMEGA event"></button><figcaption>With fellow graduate students at an MMEGA event</figcaption></figure>
       <figure class="g4"><button data-zoom><img src="img/bonfire.jpg" alt="MMEGA bonfire event poster"></button><figcaption>MMEGA bonfire, Columbia Lake</figcaption></figure>
       <figure class="g4"><button data-zoom><img src="img/bbq.jpg" alt="MMEGA fall BBQ poster"></button><figcaption>MMEGA fall BBQ, Oct 2026</figcaption></figure>
-      <figure class="g8"><button data-zoom><img src="img/symposium.jpg" alt="Atrium set up for the MMEGA Graduate Research Symposium"></button><figcaption>Venue set up for the MMEGA Graduate Research Symposium</figcaption></figure>
-      <figure class="g7"><button data-zoom><img src="img/arcelormittal.jpg" alt="Group visit at ArcelorMittal"></button><figcaption>Industry visit to ArcelorMittal</figcaption></figure>
+      <figure class="g8"><button data-zoom><img src="img/symposium-booth.jpg" alt="Bardia with an industry exhibitor at the imaging and testing equipment booth, MMEGA Graduate Research Symposium"></button><figcaption>With an industry exhibitor at the MMEGA Graduate Research Symposium</figcaption></figure>
       <figure class="g5"><button data-zoom><img src="img/welding.jpg" alt="Manual GMAW welding in the lab with fume extraction"></button><figcaption>Hands-on GMAW in the lab</figcaption></figure>
+      <figure class="g7 upcoming"><div class="upcoming-box"><span class="label">Coming March 2027</span><h3>Welding industry event</h3><p>We are setting up an event in March for the welding industry. Photos to follow.</p></div><figcaption>CWB Association, Waterloo Student Chapter</figcaption></figure>
     </div>
   </section>
 </article>
